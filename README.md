@@ -23,35 +23,33 @@
    - `document.querySelector('선택자 내부선택자 내부선택자...');`
 
 ### 태그에 이벤트 달기
-1. `태그.addEventListener('이벤트 이름', 리스너함수);`
-    - 리스너 함수는 이벤트가 발생할 때 실행되는 함수
-2. 
+- 리스너 함수는 이벤트가 발생할 때 실행되는 함수
+```js
+태그.addEventListener('이벤트 이름', 리스너함수);
+```
+
+- 리스너 함수의 매개변수로 event 객체를 제공해서 이벤트와 관련된 정보를 얻을 수 있고, event.target은 이벤트가 발생한 대상 태그를 가리킴
 ```js
 const 리스너함수 = (event) => {
     console.log(event.target.value);
 };
 ```
 
-   - 리스너 함수의 매개변수로 event 객체를 제공해서 이벤트와 관련된 정보를 얻을 수 있음
-   - event.target은 이벤트가 발생한 대상 태그를 가리킴
-3. 
+- 입력창에 입력된 값은 value 속성으로 가져옴
 ```js
 입력창.value; // 입력창의 값을 가져옴
 입력창.value = 값; // 입력창에 값을 넣음
 ```
 
-   - 입력창에 입력된 값은 value 속성으로 가져옴
-
-4. 
+- 입력 태그(input, select, textarea 등)가 아닌 일반 태그들의 내부 값을 가져올 때에는 value가 아닌 `textContent` 속성을 사용함
 ```js
 태그.textContent; // 태그 내부의 문자를 가져옴
 태그.textContent = 값; // 태그 내부의 문자를 해당 값으로 설정함
 ```
-
-    - 입력 태그(input, select, textarea 등)가 아닌 일반 태그들의 내부 값을 가져올 때에는 value가 아닌 `textContent` 속성을 사용함
   
-5. `입력창.focus(); // 입력창을 하이라이트`
-    - 입력창이나 버튼의 경우 focus 메서드를 호출하면 해당 태그가 하이라이트 됨
-
+- 입력창이나 버튼의 경우 focus 메서드를 호출하면 해당 태그가 하이라이트 됨
+```js
+입력창.focus(); // 입력창을 하이라이트
+```
 
 
