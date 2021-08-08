@@ -1,0 +1,35 @@
+h1 {
+    width: 100%;
+    padding: 20px;
+    text-align: center;
+    font-size: 50px;
+    font-family: 'Gowun Dodum', sans-serif;
+    background-color: rgb(245, 245, 194);
+}
+
+body {
+    font-family: 'Gowun Dodum', sans-serif;
+    background-color: rgb(247, 247, 241);
+}
+
+#who {
+    font-size: 20px;
+}
+
+#word {
+    font-size: larger;
+}
+
+input {
+    font-family: 'Gowun Dodum', sans-serif;
+    height: 50px;
+    width: 82%;
+    font-size: 20px;
+}
+
+button {
+    font-family: 'Gowun Dodum', sans-serif;
+    height: 57px;
+    width: 15%;
+    font-size: 20px;
+}
