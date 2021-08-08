@@ -3,11 +3,15 @@ const $button = document.querySelector('button');
 const $input = document.querySelector('input');
 const $word = document.querySelector('#word');
 const $order = document.querySelector('#order');
+const $list = document.querySelector('#list');
 
 let word; // 제시어
 let nowWord; // 현재 단어
+let list = ''; // 제시 단어 목록
 
 const onClickButton = () => {
+    list += nowWord + ', ';
+    $list.textContent = list;
     if(!word || word[word.length-1] === nowWord[0]) { 
         // 제시어가 비어있거나 입력한 단어가 올바른가?
         word = nowWord;
@@ -21,9 +25,10 @@ const onClickButton = () => {
         }
     } else {
             alert('올바르지 않은 단어입니다.');
-            $input.value = '';
-            $input.focus();
+            location.reload();
     }
+    $input.value = '';
+    $input.focus();
 };
 
 const onInput = (event) => {
