@@ -12,7 +12,7 @@ const onClickNumber = (event) => {
         return;
     }
     if(!numTwo) {
-        $result.value = '';
+        $result.value = ''; // 화면을 비우고 값을 입력함 
     }
     numTwo += event.target.textContent;
     $result.value += event.target.textContent;
@@ -60,6 +60,10 @@ document.querySelector('#calculate').addEventListener('click', () => {
             default:
                 break;
         }
+        $operator.value = '';
+        numOne = $result.value;
+        operator = '';
+        numTwo = '';
     } else {
         alert('숫자를 입력하세요.');
     }
