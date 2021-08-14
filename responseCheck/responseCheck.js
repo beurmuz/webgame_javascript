@@ -1,11 +1,14 @@
 const $screen = document.querySelector('#screen');
 const $result = document.querySelector('#result');
+const $tries = document.querySelector('#tries');
+const $rank = document.querySelector('#rank');
 
 let startTime;
 let endTime; 
 const records = [];
 
 let timeoutId;
+let tries = 0;
 
 $screen.addEventListener('click', function() {
     if($screen.classList.contains('waiting')) { // 대기 화면
@@ -29,6 +32,16 @@ $screen.addEventListener('click', function() {
         records.push(current);
         const average = records.reduce((a,c) => a+c) / records.length;
         $result.textContent = `현재: ${current}ms, 평균: ${average}ms`;
+
+        tries+=1; // 시도 회수 기록
+        $tries.textContent = `시도 횟수: ${tries}번`;
+
+        // 5위까지만 순위 표시하기
+        const rank = records.sort((p,c) => p-c).slice(0,5).join('ms, ');
+        if(tries === 5) {
+            $rank.append(`최단기록 순위: ${rank}ms`,document.createElement('br'));
+        }
+
         // 반복해서 측정해야하므로 측정이 끝날 때마다 null로 비워야 함
         startTime = null;
         endTime = null;
