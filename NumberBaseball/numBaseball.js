@@ -30,6 +30,12 @@ function checkInput(input) {
     return true;
 }
 
+function dead() {
+    const message = document.createTextNode(`패배! 정답은 ${answer.join('')}`);
+    $logs.appendChild(message);
+}
+
+let out=0;
 $form.addEventListener('submit', (event) => {
     event.preventDefault(); // 폼 태그의 기본 동작을 취소하는 코드 
     const value = $input.value; // 입력 값 가져오기 
@@ -44,8 +50,7 @@ $form.addEventListener('submit', (event) => {
     }
     
     if(tries.length >= 9) {
-        const message = document.createTextNode(`패배! 정답은 ${answer.join('')}`);
-        $logs.appendChild(message);
+        dead();
         return;
     }
 
@@ -62,6 +67,16 @@ $form.addEventListener('submit', (event) => {
             }
         }
     }
-    $logs.append(`${value}: ${strike} 스트라이크 ${ball} 볼`, document.createElement('br'));
+    if (strike===0 && ball ===0) {
+        out++;
+        $logs.append(`${value}: 아웃`, document.createElement('br'));
+    } else {
+        $logs.append(`${value}: ${strike} 스트라이크 ${ball} 볼`, document.createElement('br'));
+    }
+
+    if(out ===3) {
+        dead();
+        return;
+    } 
     tries.push(value);
 });
