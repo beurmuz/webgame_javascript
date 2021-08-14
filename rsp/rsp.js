@@ -1,75 +1,87 @@
 const $computer = document.querySelector('#computer');
-  const $score = document.querySelector('#score');
-  const $rock = document.querySelector('#rock');
-  const $scissors = document.querySelector('#scissors');
-  const $paper = document.querySelector('#paper');
-  const IMG_URL = './rsp.png';
-  $computer.style.background = `url(${IMG_URL}) -440spx 0`;
-  $computer.style.backgroundSize = 'auto 200px';
+const $score = document.querySelector('#score');
+const $rock = document.querySelector('#rock');
+const $scissors = document.querySelector('#scissors');
+const $paper = document.querySelector('#paper');
+const $history = document.querySelector('#history');
+const IMG_URL = './rsp.png';
 
-  const rspX = {
+$computer.style.background = `url(${IMG_URL}) -440px 0`; // url x y
+$computer.style.backgroundSize = 'auto 200px'; // 가로 세로
+
+// x좌표 정보를 저장할 객체 선언
+const rspX = {
     scissors: '0', // 가위
     rock: '-220px', // 바위
     paper: '-440px', // 보
-  };
+};
 
-  let computerChoice = 'scissors';
-  const changeComputerHand = () => {
-    if (computerChoice === 'rock') { // 바위면
-      computerChoice = 'scissors';
-    } else if (computerChoice === 'scissors') { // 가위면
-      computerChoice = 'paper';
-    } else if (computerChoice === 'paper') { // 보면
-      computerChoice = 'rock';
+let comChoice = 'scissors';
+const changeComHand = () => {
+    if(comChoice === 'rock') {
+        comChoice = 'scissors';
+    } else if (comChoice === 'scissors') {
+        comChoice = 'paper';
+    } else if (comChoice === 'paper') {
+        comChoice = 'rock';
     }
-    $computer.style.background = `url(${IMG_URL}) ${rspX[computerChoice]} 0`;
+    $computer.style.background = `url(${IMG_URL}) ${rspX[comChoice]} 0`;
     $computer.style.backgroundSize = 'auto 200px';
-  }
-  let intervalId = setInterval(changeComputerHand, 50);
+}
 
-  const scoreTable = {
-    rock: 0,
-    scissors: 1,
-    paper: -1,
-  };
+let intervalId = setInterval(changeComHand, 50); // changeComHand를 5초마다 실행시킴
 
-  // clickButton 5번 호출, 인터벌 1번, 2번, 3번, 4번, 5번(얘만 intervalId)
-  //  그 다음에 버튼을 클릭하면 5번만 취소
-  let clickable = true;
-  let score = 0;
-  const clickButton = () => {
-    if (clickable) {
-      clearInterval(intervalId);
-      clickable = false;
-      // 점수 계산 및 화면 표시
-      const myChoice = event.target.textContent === '바위' 
-        ? 'rock' 
-        : event.target.textContent === '가위' 
-          ? 'scissors' 
-          : 'paper';
-      const myScore = scoreTable[myChoice];
-      const computerScore = scoreTable[computerChoice];
-      const diff = myScore - computerScore;
+const scoreTable = {
+    scissors: 0,
+    rock: 1,
+    paper: 2, 
+};
 
-      let message;
-      // 2, -1은 승리조건이고, -2, 1은 패배조건, 점수표 참고
-      if ([2, -1].includes(diff)) { // (diff ===2) || (diff ===-1)
-        score += 1;
-        message = '승리';
-      } else if ([-2, 1].includes(diff)) {
-        score -= 1;
-        message = '패배';
-      } else {
-        message = '무승부';
-      }
-      $score.textContent = `${message} 총: ${score}점`;
-      setTimeout(() => {
-        clickable = true;
-        intervalId = setInterval(changeComputerHand, 50);
-      }, 1000);
+// 5판 3승제 구현을 위해 
+let clickable = true;
+let com = 0;
+let me = 0;
+$history.append(document.createElement('hr'));
+
+const clickButton = () => {
+    if(clickable) {
+        clearInterval(intervalId);
+        clickable = false; 
+
+        // 점수 계산, 화면 표시
+        const myChoice = event.target.textContent === '바위' ? 'rock' 
+            : event.target.textContent === '가위' ? 'scissors'
+            : 'paper';
+        const myScore = scoreTable[myChoice];
+        const comScore = scoreTable[comChoice];
+        const diff = myScore - comScore;
+
+        let message;
+        // diff가 0이면 무승부, 1 or -2면 승리, -1 or 2면 패배
+        if([1, -2].includes(diff)) {
+            me += 1;
+            message = '이겼습니다!';
+        } else if ([-1, 2].includes(diff)) {
+             com += 1;
+             message = '졌습니다!';
+        } else {
+            message = '무승부입니다.';
+        }
+        $history.append(`${me} : ${com}`,document.createElement('br'));
+        if(me === 3) {
+             $score.textContent = `${me} : ${com} 으로 내가 이겼습니다! `;
+        } else if(com === 3) {
+            $score.textContent = `${me} : ${com} 으로 컴퓨터가 이겼습니다! `;
+        } else {
+            $score.textContent = `${me} : ${com} ${message} `;
+             setTimeout(() => {
+                clickable = true;
+                intervalId = setInterval(changeComHand, 50);
+            }, 1000);
+        }
     }
-  }; 
+};
 
-  $rock.addEventListener('click', clickButton);
-  $scissors.addEventListener('click', clickButton);
-  $paper.addEventListener('click', clickButton)
+$rock.addEventListener('click', clickButton);
+$scissors.addEventListener('click', clickButton);
+$paper.addEventListener('click', clickButton);
