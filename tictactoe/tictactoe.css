@@ -1,9 +1,15 @@
+#btn {
+    width: 321px;
+    height: 40px;
+    background-color: palevioletred;
+}
+
 table {
     border-collapse: collapse;
 }
 
 td {
-    border: 1px solid black;
+    border: 2px solid black;
     width: 60px;
     height: 60px;
     text-align: center;
