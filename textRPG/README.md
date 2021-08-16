@@ -123,3 +123,95 @@ const monster2 = new Monster('슬라임', 26, 10, 10);
 const monster3 = new Monster('슬라임', 25, 11, 10);
 ```
 
+### 클래스를 이용한 생성자 함수와 공장 함수, 메서드 함수
+#### 클래스를 이용한 생성자 함수 
+- class 예약어로 클래스를 선언하고, constructor 메서드 안에 기존 코드를 넣으면 됨 
+- 클래스에 new를 붙여 호출하면 constructor 함수가 실행되고 객체가 반환됨
+
+```js
+class Monster {
+    constructor(name, hp, att, xp) {
+        this.name = name;
+        this.hp = hp;
+        this.att = att;
+        this.xp = xp;
+    }
+    attack(monster) {
+        monster.hp -= this.att;
+        this.hp = monster.att;
+    }
+    heal(monster) {
+        this.hp += 20;
+        this.hp -= monster.att;
+    }
+}
+```
+
+#### 공장 함수
+- 공장 함수에서는 객체를 생성할 때마다 attack과 heal 메서드도 같이 새로 생성됨
+```js
+function createMonster(name, hp, att, xp) {
+    return {
+        name, hp, att, xp,
+        attack(monster) {
+            monster.hp -= this.att;
+            this.hp -= monster.att;
+        },
+        heal(monster) {
+            this.hp += 20;
+            this.hp -= monster.att;
+        },
+    };
+}
+```
+- 클래스 문법에서는 한번 만든 attack과 heal 메서드는 계속 재사용 함 
+
+#### 프로토타입 메서드
+- prototype 속성 안에 추가한 메서드 
+- 생성자 함수에 메서드를 추가할 때는 prototype이라는 속성 안에 추가해야 함
+- 이렇게 하면 공장 함수와 달리 attack과 heal 메서드를 재사용 함
+- 그러나 생성자 함수와 프로토타입 메서드가 하나로 묶여있지 않음 
+```js
+function Monster(name, hp, att, xp) {
+    this.name = name;
+    this.hp = hp;
+    this.att = att;
+    this.xp = xp;
+}
+Monster.prototype.attack = function(monster) {
+    monster.hp -= this.att;
+    this.hp -= monster.att;
+};
+Monster.prototype.heal = function(monster) {
+    this.hp += 20;
+    this.hp -= monster.att;
+};
+```
+- 공장 함수와 프로토타입 메서드의 여러 문제점을 해결한 것이 바로 클래스 문법
+- 생성자 함수와 메서드가 묶여 있어 보기에도 편하고, 메서드 함수를 매번 재생성해야 하는 문제도 발생하지 않음 
+
+### `addEventListener`안에서 함수 선언문과 화살표 함수에 따른 this 및 콜백함수
+1. **함수 선언문** - this는 `document`를 가리킴
+```js
+document.addEventListener('click', function() {
+    console.log(this); // document
+});
+```
+
+2. **화살표 함수** - this는 `window`를 가리킴
+```js
+document.addEventListener('click', () => {
+    console.log(this); // window
+});
+```
+
+- **함수 선언문일 때만 document가 나오는 이유**는 click 이벤트가 발생하면 **addEventListener메서드가 콜백 함수의 this를 `event.target`으로 바꿔서 호출**하기 때문 
+- 함수 선언문의 this는 bind 메서드를 사용해서 직접 바꿀 수 있음
+  ```js
+  function a() {
+      console.log(this); // window
+  }
+  a.bind(document)(); // document
+  ```
+
+- 화살표 함수는 bind를 할 수 없어 this가 바뀌지 않아 window 그대로 나옴 

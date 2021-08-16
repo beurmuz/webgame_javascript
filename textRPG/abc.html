@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        class Human {
+        constructor(name, age) {
+            this.name = name;
+            this.age = age;
+        }
+        sayName() {
+            console.log(this.name);
+        }
+        sayAge() {
+            console.log(this.age);
+        }
+    }
+
+    class Programmers extends Human {
+        constructor(name, age, stacks) {
+            super(name, age);
+            this.stacks = stacks;
+        }
+        writeCode() {
+            console.log(this.stacks.join() + '(으)로 코딩해요.');
+        }
+    }
+
+    const programmer = new Programmers(
+        '누구게',
+        23,
+        ['html', 'js', 'css'],
+    );
+    programmer.writeCode();
+    </script>
+</body>
+</html>

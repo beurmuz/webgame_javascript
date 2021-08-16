@@ -18,6 +18,14 @@ const hero = {
     hp: 100, // 현재 체력
     xp: 0, // 경험치
     att: 10, // 공격력
+    attack(monster) {
+        monster.hp -= this.att;
+        this.hp -= monster.att;
+    },
+    heal(monster) {
+        this.hp += 20;
+        this.hp -= monster.att;
+    },
 };
 
 let monster = null;
@@ -53,7 +61,23 @@ $gameMenu.addEventListener('submit', (event) => {
         monster.maxHp = monster.hp;
         $monsterName.textContent = monster.name;
         $monsterHp.textContent = `HP: ${monster.hp}/${monster.maxHp}`;
-        $monsterAtt.textContent = `Att: ${monster.att}`;
+        $monsterAtt.textContent = `ATT: ${monster.att}`;
+    } else if (input === '2') {
+
+    } else if (input === '3') {
+        
+    }
+});
+
+$battleMenu.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const input = event.target['battle-input'].value;
+    if(input === '1') {
+        hero.attack(monster);
+        monster.attack(hero);
+        $heroHp.textContent = `HP: ${hero.hp}/${hero.maxHp}`;
+        $monsterHp.textContent = `HP: ${monster.hp}/${monster.maxHp}`;
+        $message.textContent = `${hero.att}의 데미지를 주고, ${monster.att}의 데미지를 받았다!`;
     } else if (input === '2') {
 
     } else if (input === '3') {
