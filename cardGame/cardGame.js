@@ -8,6 +8,9 @@ let clicked = [];
 let completed = [];
 let clickable = false;
 
+let startTime;
+let endTime; 
+
 function shuffle() { // 피셔-예이츠 셔플
     for(let i = 0; colorCopy.length > 0; i += 1) {
         const randomIndex = Math.floor(Math.random()*colorCopy.length);
@@ -50,8 +53,10 @@ function onClickCard() {
         if(completed.length !== total) {
             return;
         }
+        endTime = new Date();
+        diff = (endTime - startTime)/1000;
         setTimeout(() => {
-            alert('축하합니다!');
+            alert(`축하합니다! 총 ${diff}초가 걸렸습니다!`);
             resetGame();
         }, 800);
         return;
@@ -86,9 +91,11 @@ function startGame() {
         });
         clickable = true;
     }, 5000);
+    
+    startTime = new Date();
 }
 
-function restGame() {
+function resetGame() {
     $wrapper.innerHTML = '';
     colorCopy = colors.concat(colors);
     shuffleed = [];
