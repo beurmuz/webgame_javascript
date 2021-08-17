@@ -1,8 +1,14 @@
 const $wrapper = document.querySelector('#wrapper');
 
-const total = 12;
-const colors = ['darkseagreen', 'palegoldenrod', 'mediumpurple', 'pink', 'cornflowerblue', 'palevioletred'];
+const cardCount = prompt('카드 색상 수를 입력해주세요. 최대 10개까지 가능합니다.')*1;
+console.log(cardCount);
+
+const total = (cardCount*2);
+const colorsList = ['darkseagreen', 'palegoldenrod', 'mediumpurple', 'pink', 'cornflowerblue', 'palevioletred', 'bisque', 'darkcyan', 'darkgoldenrod', 'dimgray'];
+const colors = colorsList.slice(0,cardCount);
+//console.log(colors);
 let colorCopy = colors.concat(colors);
+console.log(colorCopy.length);
 let shuffled = [];
 let clicked = [];
 let completed = [];
