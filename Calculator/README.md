@@ -16,7 +16,7 @@ const func = () => {
 
 ```js
 const innerFunc = func();
-innerFunc(); // hello
+innerFunc(); // javascript
 ```
 
 반환하는 값을 바꾸고 싶을 때는 매개변수를 사용함
